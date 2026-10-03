@@ -1,6 +1,6 @@
 # TraceForge workflow reference
 
-The existing `emma`, `emcap` and configuration names remain compatibility interfaces.
+The existing `emma`, `emcap` and configuration names remain compatibility interfaces. Run the commands below from the repository root with the matching virtual environment active; installing `requirements.txt` installs dependencies but does not add these repository scripts to `PATH`.
 
 ## Installation
 
@@ -10,7 +10,7 @@ $ cd <TraceForge_directory>
 $ python -m venv env
 $ source env/bin/activate
 $ pip install -r requirements.txt
-$ emma.py -h
+$ python emma.py -h
 ```
 
 
@@ -70,30 +70,30 @@ $ celery -A emma_worker worker -l info -Q celery,priority.high
 Note that each slave should be able to access the datasets listen in `datasets.conf`. Now, the master can issue commands to process these datasets.
 
 ```
-$ emma.py plot ASCAD:Profiling_traces
+$ python emma.py plot ASCAD:Profiling_traces
 ```
 
 Most ops can be executed locally (without distributing tasks to worker nodes):
 
 ```
-$ emma.py plot ASCAD:Profiling_traces --local
+$ python emma.py plot ASCAD:Profiling_traces --local
 ```
 
-See `emma.py -h` for a full list of available commands.
+See `python emma.py -h` for a full list of available commands.
 
 
 ## EMcap
 
 EMcap is a tool that allows for convenient capturing and storage of EM trace datasets using Software Defined Radios (SDRs).
 
-See `emcap.py -h` for a full list of available commands.
+See `python emcap.py -h` for a full list of available commands.
 
 
 ## Running tools
 
 ```bash
 $ cd <TraceForge_directory>
-$ PYTHONPATH=. tools/visualize_dataset.py em-cpa-arduino
+$ PYTHONPATH=. python tools/visualize_dataset.py em-cpa-arduino
 ```
 
 
