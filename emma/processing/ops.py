@@ -150,21 +150,6 @@ def spectogram_trace_set(trace_set, result, conf, params=None):
         conf.reference_signal = np.square(np.abs(np.fft.fft(conf.reference_signal)))
 
 
-def tspectogram_trace_set(trace_set, result, conf, params=None):
-    if not trace_set.windowed:
-        raise EMMAException("Trace set should be windowed")
-
-    # Check params
-    if params is not None:
-        if len(params) == 1:
-            nfft = int(params[0])
-        elif len(params) == 2:
-            nfft = int(params[0])
-            noverlap = int(nfft * int(params[1]) / 100.0)
-
-    print("TODO")
-
-
 def detect_peaks(signal, spread, num_peaks=8):
     max_end = 0
     spread += int(spread / 2)
