@@ -13,3 +13,7 @@ The source comparison checks Python syntax trees without comments or source loca
 ## Execution boundary
 
 No RF transmission, signal acquisition, connected-device commands, firmware changes or live-target experiments were performed. No external experimental datasets were downloaded. Build and reproduction requirements remain those documented by the source; absent dependencies have not been silently replaced with new algorithms.
+
+## Subsequent source cleanup
+
+Removed the unused `tspectogram_trace_set` placeholder, which only parsed unused parameters and printed `TODO`. It had no repository callers or operation registration. The working `spec` operation and every remaining executable syntax tree are unchanged. This removal was checked by source comparison and parsing, without installing or running the legacy TensorFlow environment.
