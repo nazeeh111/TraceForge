@@ -1,10 +1,42 @@
 # TraceForge
 
-**Development history:** Developed locally using Git before publication. These projects were published to GitHub together, so similar upload dates do not indicate when development began.
-
-![TraceForge](docs/identity.svg)
-
 A Python workspace for electromagnetic trace processing, correlation metrics and model-based analysis.
+
+[Try standalone metrics](#start-with-the-standalone-metrics) · [Workspace map](#workspace-map) · [Full environment](#environment-and-workflow) · [Source terms](#source-terms)
+
+## Start with the standalone metrics
+
+The two metric accumulators can run with **NumPy alone**, without TensorFlow, Redis, capture hardware or experimental data. From the repository root:
+
+```sh
+python -m pip install numpy
+python - <<'PY'
+import numpy as np
+from emma.metrics.correlationlist import CorrelationList
+from emma.metrics.distancelist import DistanceList
+
+x = np.array([1., 2., 3., 4.])
+y = 2 * x + 3
+reverse = x[::-1]
+c = CorrelationList((2,))
+c.update(0, x[:2], y[:2])
+c.update(0, x[2:], y[2:])
+c.update(1, x, reverse)
+d = DistanceList((1,))
+d.update(0, x, reverse)
+print(f'positive correlation: {c[0]:.1f}')
+print(f'negative correlation: {c[1]:.1f}')
+print(f'absolute-distance sum: {d[0]:.1f}')
+PY
+```
+
+```text
+positive correlation: 1.0
+negative correlation: -1.0
+absolute-distance sum: 8.0
+```
+
+This checked synthetic example shows incremental correlation accumulation and the **sum** of absolute differences. It is not an experimental trace, model result or key-recovery claim. The [correlation](emma/metrics/correlationlist.py) and [distance](emma/metrics/distancelist.py) implementations are directly inspectable. Correlation needs observations with nonzero variation to be meaningful; an untouched accumulator is not a valid result.
 
 ## Workspace map
 
@@ -20,6 +52,8 @@ A Python workspace for electromagnetic trace processing, correlation metrics and
 ## Environment and workflow
 
 The pinned requirements target an older Python ecosystem, including TensorFlow 1.14 and Keras 2.2.5. Use a matching isolated environment when reproducing existing experiments. Package names, command names, configuration sections and serialized formats are preserved.
+
+The full `emma.py` workflow invokes `redis-cli flushall` before analysis and purges queued tasks afterward, including when `--local` is selected. Run it only with a dedicated, disposable research Redis instance; `--local` describes task execution, not isolation from Redis side effects. The standalone metrics example above does not import or run that entry point.
 
 [Configuration and workflow](docs/WORKFLOW.md) covers the existing local and worker-based commands. [Preservation checks](COMPATIBILITY.md) records the narrower offline validation performed for this publication.
 
