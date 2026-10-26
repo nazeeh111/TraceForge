@@ -53,7 +53,7 @@ This checked synthetic example shows incremental correlation accumulation and th
 
 ## Environment and workflow
 
-The pinned requirements target an older Python ecosystem, including TensorFlow 1.14 and Keras 2.2.5. Use a matching isolated environment when reproducing existing experiments. Package names, command names, configuration sections and serialized formats are preserved.
+The pinned requirements target an older Python ecosystem, including TensorFlow 1.14 and Keras 2.2.5. Use a matching isolated environment when reproducing existing experiments. Package names, command names and configuration sections are preserved. Existing saved correlation objects remain readable; new saves use centered floating-point statistics to avoid cancellation when observations have large offsets. Precision already lost in old accumulated sums cannot be recovered.
 
 The full `emma.py` workflow invokes `redis-cli flushall` before analysis and purges queued tasks afterward, including when `--local` is selected. Run it only with a dedicated, disposable research Redis instance; `--local` describes task execution, not isolation from Redis side effects. The standalone metrics example above does not import or run that entry point.
 
