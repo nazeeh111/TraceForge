@@ -36,6 +36,8 @@ negative correlation: -1.0
 absolute-distance sum: 8.0
 ```
 
+Run the standalone accumulator tests with `python -m unittest discover -s tests -v`; they also need only NumPy.
+
 This checked synthetic example shows incremental correlation accumulation and the **sum** of absolute differences. It is not an experimental trace, model result or key-recovery claim. The [correlation](emma/metrics/correlationlist.py) and [distance](emma/metrics/distancelist.py) implementations are directly inspectable. Correlation needs observations with nonzero variation to be meaningful; an untouched accumulator is not a valid result.
 
 ## Workspace map

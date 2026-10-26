@@ -12,7 +12,7 @@ class CorrelationList:
         self._n = np.zeros(shape, dtype=float)  # TODO: Since this should be the same for every point, we can maybe use a single point for it
 
     def __getitem__(self, key):
-        if isinstance(key, int) or isinstance(key, tuple) or isinstance(key, list):
+        if isinstance(key, (int, tuple, list)):
             num = self._sumxy[key] - (self._sumx[key] * self._sumy[key] / self._n[key])
             denom1 = self._sumxsq[key] - (self._sumx[key]**2 / self._n[key])
             denom2 = self._sumysq[key] - (self._sumy[key]**2 / self._n[key])
@@ -43,4 +43,5 @@ class CorrelationList:
             raise TypeError
 
     def save(self):
-        pickle.dump(self, open("/tmp/correlations.p", "wb"))
+        with open("/tmp/correlations.p", "wb") as stream:
+            pickle.dump(self, stream)

@@ -8,7 +8,7 @@ class DistanceList:
         self._n = np.zeros(shape, dtype=float)  # TODO: Since this should be the same for every point, we can maybe use a single point for it
 
     def __getitem__(self, key):
-        if isinstance(key, int) or isinstance(key, tuple) or isinstance(key, list):
+        if isinstance(key, (int, tuple, list)):
             return self._dxy[key]
         if isinstance(key, slice):
             raise NotImplementedError
@@ -27,4 +27,5 @@ class DistanceList:
             raise TypeError
 
     def save(self):
-        pickle.dump(self, open("/tmp/distancelist.p", "wb"))
+        with open("/tmp/distancelist.p", "wb") as stream:
+            pickle.dump(self, stream)
