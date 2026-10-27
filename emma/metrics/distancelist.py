@@ -16,6 +16,7 @@ class DistanceList:
             raise TypeError
 
     def update(self, key, true, pred):
+        true, pred = np.asarray(true, dtype=float), np.asarray(pred, dtype=float)
         self._dxy[key] += np.sum(np.abs(true - pred))
         self._n[key] += len(pred)
 
